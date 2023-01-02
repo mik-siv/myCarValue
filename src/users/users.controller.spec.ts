@@ -13,7 +13,9 @@ describe('UsersController', () => {
   beforeEach(async () => {
     fakeAuthService = {
       // signup: () => {},
-      // signin: () => {},
+      signin: (email: string, password: string) => {
+        return Promise.resolve({ id: 1, email, password } as User);
+      },
     };
 
     fakeUsersService = {
@@ -64,5 +66,15 @@ describe('UsersController', () => {
       return null;
     };
     await expect(controller.findUser('1')).rejects.toThrow(NotFoundException);
+  });
+
+  it('Signin updates session object and returns user', async () => {
+    const session = { userId: -10 };
+    const user = await controller.signin(
+      { email: 'test@test.com', password: 'password' },
+      session,
+    );
+    expect(user.id).toEqual(1);
+    expect(session.userId).toEqual(1);
   });
 });
