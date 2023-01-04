@@ -16,7 +16,7 @@ describe('Authentication system', () => {
   });
 
   it('handles a signup request', () => {
-    const email = Math.floor(Math.random() * 9999) + '@test.com';
+    const email = 'test@test.com';
     return request(app.getHttpServer())
       .post('/auth/signup')
       .send({
@@ -29,5 +29,21 @@ describe('Authentication system', () => {
         expect(id).toBeDefined();
         expect(email).toEqual(email);
       });
+  });
+
+  it('signup a new user then get the currently logged user', async () => {
+    const email = 'test1@test.com';
+    const res = await request(app.getHttpServer())
+      .post('/auth/signup')
+      .send({ email, password: 'password' })
+      .expect(201);
+    const cookie = res.get('Set-Cookie');
+
+    const { body } = await request(app.getHttpServer())
+      .get('/auth/currentuser')
+      .set('Cookie', cookie)
+      .expect(200);
+
+    expect(body.email).toEqual(email);
   });
 });
