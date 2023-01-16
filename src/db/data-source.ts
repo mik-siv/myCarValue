@@ -1,0 +1,26 @@
+import { DataSource, DataSourceOptions } from 'typeorm';
+
+const getDbName = (env: string) => {
+  switch (env) {
+    case 'development':
+      return 'db.sqlite';
+    case 'test':
+      return 'test.sqlite';
+    case 'production':
+      break;
+    default:
+      throw new Error('unknown environment');
+  }
+};
+
+export const dataSourceOptions: DataSourceOptions = {
+  type: 'sqlite',
+  synchronize: false,
+  entities: ['**/*.entity.js'],
+  database: getDbName(process.env.NODE_ENV),
+  migrations: ['dist/db/migrations/*.js'],
+};
+
+const dataSource = new DataSource(dataSourceOptions);
+
+export default dataSource;

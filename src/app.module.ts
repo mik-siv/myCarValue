@@ -7,8 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ReportsModule } from './reports/reports.module';
 import { ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
-const dbConfig = require('../ormconfig.js');
-
+import { dataSourceOptions } from './db/data-source';
 const cookieSession = require('cookie-session');
 
 @Module({
@@ -17,7 +16,7 @@ const cookieSession = require('cookie-session');
       isGlobal: true,
       envFilePath: `.env.${process.env.NODE_ENV}`,
     }),
-    TypeOrmModule.forRoot(dbConfig),
+    TypeOrmModule.forRoot(dataSourceOptions),
     UsersModule,
     ReportsModule,
   ],
