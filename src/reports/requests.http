@@ -17,7 +17,7 @@ PATCH http://localhost:3000/reports/6
 Content-Type: application/json
 
 {
-    "approved": false
+    "approved": true
 }
 
 ### GET reports by query

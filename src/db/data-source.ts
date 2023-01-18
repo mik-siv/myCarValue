@@ -16,9 +16,10 @@ const getDbName = (env: string) => {
 export const dataSourceOptions: DataSourceOptions = {
   type: 'sqlite',
   synchronize: false,
-  entities: ['**/*.entity.js'],
+  entities: [__dirname + '/../**/*.entity.{js,ts}'],
   database: getDbName(process.env.NODE_ENV),
   migrations: ['dist/db/migrations/*.js'],
+  migrationsRun: process.env.NODE_ENV === 'test' ? true : false,
 };
 
 const dataSource = new DataSource(dataSourceOptions);
