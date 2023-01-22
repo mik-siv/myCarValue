@@ -21,15 +21,12 @@ const getDbConfig = (env: string): DataSourceOptions => {
       };
     case 'production':
       return {
-        type: 'postgres',
-        synchronize: false,
-        url: process.env.DATABASE_URL,
+        type: 'mongodb',
+        url: process.env.MONGODB_CONNECTION_STRING,
+        database: process.env.MONGODB_DATABASE,
         entities: [__dirname + '/../**/*.entity.{js,ts}'],
         migrations: ['dist/db/migrations/*.js'],
         migrationsRun: true,
-        ssl: {
-          rejectUnauthorized: false,
-        },
       };
     default:
       throw new Error('unknown environment');
