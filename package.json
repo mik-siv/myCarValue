@@ -10,11 +10,11 @@
     "deploy": "gcloud app deploy --quiet",
     "prebuild": "rimraf dist",
     "gcp-build": "npm run build",
-    "build": "rm -rf dist && nest build",
+    "build": "rimraf dist && npx nest build",
     "start": "npm run start:prod",
     "start:dev": "cross-env NODE_ENV=development nest start --watch",
     "start:debug": "cross-env NODE_ENV=development nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "npm run build && cross-env NODE_ENV=production node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "test": "cross-env NODE_ENV=test jest",
@@ -25,7 +25,7 @@
     "typeorm": "cross-env NODE_ENV=development npm run build && npx typeorm -d dist/db/data-source.js",
     "migration:generate": "cross-env NODE_ENV=development npm run typeorm -- migration:generate",
     "migration:run": "cross-env NODE_ENV=development npm run typeorm -- migration:run",
-    "migration:revert": "cross-env NODE_ENV=development npm run typeorm -- migration:revert"
+    "migration:revert": "cross-env NODE_ENV=production npm run typeorm -- migration:revert"
   },
   "dependencies": {
     "@nestjs/common": "^9.0.0",
@@ -38,6 +38,8 @@
     "class-validator": "^0.14.0",
     "cookie-session": "^2.0.0",
     "cross-env": "^7.0.3",
+    "dotenv": "^16.0.3",
+    "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0",
