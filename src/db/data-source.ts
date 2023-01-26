@@ -33,7 +33,7 @@ const getDbConfig = (env: string): DataSourceOptions => {
       throw new Error('unknown environment');
   }
 };
-
+console.log(getDbConfig(process.env.NODE_ENV));
 export const dataSourceOptions: DataSourceOptions = getDbConfig(
   process.env.NODE_ENV,
 );

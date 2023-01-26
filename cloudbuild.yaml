@@ -1,0 +1,17 @@
+steps:
+  - name: node:16.17.0
+    entrypoint: npm
+    args: ['install']
+  - name: node:16.17.0
+    entrypoint: npm
+    args: ['run', 'create-env']
+    env:
+      - 'COOKIE_KEY=${_COOKIE_KEY}'
+      - 'NODE_ENV=${_NODE_ENV}'
+      - 'PORT=${_PORT}'
+      - 'DATABASE_URL=${_DATABASE_URL}'
+      - 'DATABASE_NAME=${_DATABASE_NAME}'
+      - 'DATABASE_HOST=${_DATABASE_HOST}'
+  - name: 'gcr.io/cloud-builders/gcloud'
+    args: ['app', 'deploy']
+timeout: '1600s'
