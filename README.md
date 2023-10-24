@@ -24,7 +24,7 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+A study project for the application solution to measure the expected value of a car on resell.
 
 ## Installation
 
